@@ -2,15 +2,7 @@
 
 import styles from '../utils/styles';
 
-/**
- * StatCard
- * Props:
- *   title    {string}
- *   value    {string | number}
- *   subtitle {string}        optional
- *   icon     {LucideIcon}
- *   trend    {{ value: number, positive: boolean }}  optional
- */
+
 export default function StatCard({ title, value, subtitle, icon: Icon, trend }) {
   return (
     <div style={styles.card}>

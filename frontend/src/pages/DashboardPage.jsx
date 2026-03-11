@@ -1,4 +1,3 @@
-// ── pages/DashboardPage.jsx ──
 
 import { Award, FileText, BookOpen, Lightbulb } from 'lucide-react';
 import StatCard        from '../components/StatCard';

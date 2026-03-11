@@ -7,8 +7,6 @@ import DashboardPage    from './pages/DashboardPage';
 import DataEntryPage    from './pages/DataEntryPge';
 import styles           from './utils/styles';
 
-
-
 function AppShell() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [toastMsg,    setToastMsg]    = useState(null);

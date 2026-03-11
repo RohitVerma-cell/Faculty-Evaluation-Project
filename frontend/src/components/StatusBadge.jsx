@@ -1,4 +1,3 @@
-// ── components/StatusBadge.jsx ──
 
 import styles from '../utils/styles';
 import { STATUS_LABELS } from '../utils/constants';
@@ -13,11 +12,6 @@ const COLOR_MAP = {
   rejected:           { bg: '#fee2e2', color: '#dc2626' },
 };
 
-/**
- * StatusBadge
- * Props:
- *   status {string}  one of the STATUS_LABELS keys
- */
 export default function StatusBadge({ status }) {
   const c = COLOR_MAP[status] ?? COLOR_MAP.draft;
   return (
