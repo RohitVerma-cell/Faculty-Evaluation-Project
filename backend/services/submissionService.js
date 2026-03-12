@@ -1,7 +1,3 @@
-// ── services/submissionService.js ──
-// Drop this file into your frontend src/ folder.
-// Import these functions in your pages to talk to the backend.
-
 const BASE_URL = 'http://localhost:5000/api/submission';
 
 // ── Fetch a faculty's submission ──────────────────────
