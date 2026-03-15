@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import { Plus, Trash2, Upload } from 'lucide-react';
-import styles from '../../../utils/styles';
+import styles from '../../../../utils/styles';
+import PDFUpload from '../../PDFUpload';
 
 const EMPTY_EXT  = () => ({ id: String(Date.now()+Math.random()), projectTitle:'', agency:'', amount:'', status:'Ongoing', role:'PI', sanctionNo:'' });
 const EMPTY_IND  = () => ({ id: String(Date.now()+Math.random()), projectTitle:'', industry:'', amount:'', sanctionNumber:'', role:'PI', coPIs:'' });
@@ -57,8 +57,11 @@ export default function R4Form({ data, setData }) {
                 <div><label style={styles.label}>Sanction No.</label>
                   <input style={styles.input} placeholder="Sanction number" value={entry.sanctionNo}
                     onChange={(e) => update('externalProjects', entry.id, 'sanctionNo', e.target.value)} /></div>
-                <div><label style={styles.label}>Proof (PDF)</label>
-                  <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+                <div>
+                  {/* <label style={styles.label}>Proof (PDF)</label>
+                  <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+                  <PDFUpload label="Proof (PDF)" value={entry.proof} onChange={(val) => update('externalProjects', entry.id, 'proof', val)} />
+                  </div>
               </div>
             </div>
           ))}
@@ -95,8 +98,11 @@ export default function R4Form({ data, setData }) {
                 <div><label style={styles.label}>Name of Co-PIs</label>
                   <input style={styles.input} placeholder="Co-PI names" value={entry.coPIs}
                     onChange={(e) => update('industryProjects', entry.id, 'coPIs', e.target.value)} /></div>
-                <div><label style={styles.label}>Proof (PDF)</label>
-                  <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+                <div>
+                  {/* <label style={styles.label}>Proof (PDF)</label>
+                  <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+                  <PDFUpload label="Proof (PDF)" value={entry.proof} onChange={(val) => update('industryProjects', entry.id, 'proof', val)} />
+                  </div>
               </div>
             </div>
           ))}

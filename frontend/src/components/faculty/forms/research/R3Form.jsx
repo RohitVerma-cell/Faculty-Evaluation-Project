@@ -1,6 +1,6 @@
-
 import { Plus, Trash2, Upload } from 'lucide-react';
-import styles from '../../../utils/styles';
+import styles from '../../../../utils/styles'
+import PDFUpload from '../../PDFUpload';
 
 const EMPTY = () => ({ id: String(Date.now()+Math.random()), paperTitle:'', conferenceTitle:'', isbnNumberDate:'', indexing:'Scopus', authorshipPosition:'1st', publisher:'International' });
 
@@ -42,8 +42,11 @@ export default function R3Form({ entries, setEntries }) {
                 onChange={(e) => update(entry.id, 'publisher', e.target.value)}>
                 <option>International</option><option>National</option>
               </select></div>
-            <div><label style={styles.label}>Proof (PDF)</label>
-              <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+            <div>
+              {/* <label style={styles.label}>Proof (PDF)</label>
+              <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+              <PDFUpload label="Proof (PDF)" value={entry.proof} onChange={(val) => update(entry.id, 'proof', val)} />
+              </div>
           </div>
         </div>
       ))}

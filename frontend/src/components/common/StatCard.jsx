@@ -1,6 +1,6 @@
 // ── components/StatCard.jsx ──
 
-import styles from '../utils/styles';
+import styles from '../../utils/styles';
 
 
 export default function StatCard({ title, value, subtitle, icon: Icon, trend }) {

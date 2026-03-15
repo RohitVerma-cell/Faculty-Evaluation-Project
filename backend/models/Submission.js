@@ -1,14 +1,23 @@
-
 const mongoose = require('mongoose');
 
-// ── Teaching Learning sub-schemas ──
+// ── Reusable Proof Schema
+const ProofSchema = new mongoose.Schema({
+  fileId:       { type: String, default: '' }, 
+  filePath:     { type: String, default: '' }, 
+  fileName:     { type: String, default: '' }, 
+  originalName: { type: String, default: '' }, 
+  size:         { type: Number, default: 0  }, 
+}, { _id: false });
+
+// TEACHING LEARNING
 
 const StudentPaperSchema = new mongoose.Schema({
-  title: { type: String, default: '' },
+  title:    { type: String, default: '' },
   students: { type: String, default: '' },
-  journal: { type: String, default: '' },
+  journal:  { type: String, default: '' },
   indexing: { type: String, default: 'UGC' },
-  date: { type: String, default: '' },
+  date:     { type: String, default: '' },
+  proof:    { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const InternshipSchema = new mongoose.Schema({
@@ -16,6 +25,7 @@ const InternshipSchema = new mongoose.Schema({
   company:     { type: String, default: '' },
   startDate:   { type: String, default: '' },
   endDate:     { type: String, default: '' },
+  proof:       { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const StudentPatentSchema = new mongoose.Schema({
@@ -24,6 +34,7 @@ const StudentPatentSchema = new mongoose.Schema({
   patentNo:          { type: String, default: '' },
   status:            { type: String, default: 'Filed' },
   studentCount:      { type: String, default: '' },
+  proof:             { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const TL1Schema = new mongoose.Schema({
@@ -32,25 +43,29 @@ const TL1Schema = new mongoose.Schema({
   liveProjectTitles:     { type: String, default: '' },
   liveProjectPrizeCount: { type: String, default: '' },
   liveProjectEvent:      { type: String, default: '' },
+  liveProjectProof:      { type: ProofSchema, default: () => ({}) },
   // TL.1.2
-  caseStudyTitle:        { type: String, default: '' },
-  caseStudyPublication:  { type: String, default: '' },
-  caseStudyStudents:     { type: String, default: '' },
+  caseStudyTitle:       { type: String, default: '' },
+  caseStudyPublication: { type: String, default: '' },
+  caseStudyStudents:    { type: String, default: '' },
+  caseStudyProof:       { type: ProofSchema, default: () => ({}) },
   // TL.1.3
-  articleTitle:          { type: String, default: '' },
-  articlePublication:    { type: String, default: '' },
-  articleStudents:       { type: String, default: '' },
+  articleTitle:       { type: String, default: '' },
+  articlePublication: { type: String, default: '' },
+  articleStudents:    { type: String, default: '' },
+  articleProof:       { type: ProofSchema, default: () => ({}) },
   // TL.1.4
-  studentPapers:         { type: [StudentPaperSchema], default: [] },
+  studentPapers: { type: [StudentPaperSchema], default: [] },
   // TL.1.5
-  internships:           { type: [InternshipSchema], default: [] },
+  internships: { type: [InternshipSchema], default: [] },
   // TL.1.6
-  studentPatents:        { type: [StudentPatentSchema], default: [] },
+  studentPatents: { type: [StudentPatentSchema], default: [] },
   // TL.1.7
-  certStudentCount:      { type: String, default: '' },
-  certProgramTitle:      { type: String, default: '' },
-  certAgency:            { type: String, default: '' },
-  certReceivedCount:     { type: String, default: '' },
+  certStudentCount:  { type: String, default: '' },
+  certProgramTitle:  { type: String, default: '' },
+  certAgency:        { type: String, default: '' },
+  certReceivedCount: { type: String, default: '' },
+  certProof:         { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const ResultRowSchema = new mongoose.Schema({
@@ -68,12 +83,14 @@ const AttendanceRowSchema = new mongoose.Schema({
 }, { _id: false });
 
 const TL4Schema = new mongoose.Schema({
-  universityResult: { type: [ResultRowSchema], default: [] },
-  mstResult:        { type: [ResultRowSchema], default: [] },
-  attendance:       { type: [AttendanceRowSchema], default: [] },
+  universityResult: { type: [ResultRowSchema],    default: [] },
+  mstResult:        { type: [ResultRowSchema],    default: [] },
+  attendance:       { type: [AttendanceRowSchema],default: [] },
 }, { _id: false });
 
-// ── Research sub-schemas ──
+// ─────────────────────────────────────────────
+// RESEARCH
+// ─────────────────────────────────────────────
 
 const JournalPaperSchema = new mongoose.Schema({
   title:              { type: String, default: '' },
@@ -83,6 +100,7 @@ const JournalPaperSchema = new mongoose.Schema({
   indexing:           { type: String, default: 'Scopus' },
   authorshipPosition: { type: String, default: '1st' },
   volumeIssue:        { type: String, default: '' },
+  proof:              { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const BookSchema = new mongoose.Schema({
@@ -92,6 +110,7 @@ const BookSchema = new mongoose.Schema({
   indexing:           { type: String, default: 'Scopus' },
   authorshipPosition: { type: String, default: '1st' },
   publisher:          { type: String, default: 'International' },
+  proof:              { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const BookChapterSchema = new mongoose.Schema({
@@ -100,6 +119,7 @@ const BookChapterSchema = new mongoose.Schema({
   isbnNumber:         { type: String, default: '' },
   authorshipPosition: { type: String, default: '1st' },
   publisherName:      { type: String, default: '' },
+  proof:              { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const EditorBookSchema = new mongoose.Schema({
@@ -108,6 +128,7 @@ const EditorBookSchema = new mongoose.Schema({
   yearOfPublication:  { type: String, default: '' },
   authorshipPosition: { type: String, default: '1st' },
   publisher:          { type: String, default: 'International' },
+  proof:              { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const R2Schema = new mongoose.Schema({
@@ -123,6 +144,7 @@ const ConferencePaperSchema = new mongoose.Schema({
   indexing:           { type: String, default: 'Scopus' },
   authorshipPosition: { type: String, default: '1st' },
   publisher:          { type: String, default: 'International' },
+  proof:              { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const ExternalProjectSchema = new mongoose.Schema({
@@ -132,6 +154,7 @@ const ExternalProjectSchema = new mongoose.Schema({
   status:       { type: String, default: 'Ongoing' },
   role:         { type: String, default: 'PI' },
   sanctionNo:   { type: String, default: '' },
+  proof:        { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const IndustryProjectSchema = new mongoose.Schema({
@@ -141,6 +164,7 @@ const IndustryProjectSchema = new mongoose.Schema({
   sanctionNumber: { type: String, default: '' },
   role:           { type: String, default: 'PI' },
   coPIs:          { type: String, default: '' },
+  proof:          { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const R4Schema = new mongoose.Schema({
@@ -152,10 +176,13 @@ const R5Schema = new mongoose.Schema({
   consultancyTitle:    { type: String, default: '' },
   consultancyAgency:   { type: String, default: '' },
   consultancyAmount:   { type: String, default: '' },
+  consultancyProof:    { type: ProofSchema, default: () => ({}) },
   startupName:         { type: String, default: '' },
   mentoringDate:       { type: String, default: '' },
+  startupProof:        { type: ProofSchema, default: () => ({}) },
   internalProjectName: { type: String, default: '' },
   internalDepartment:  { type: String, default: '' },
+  internalProof:       { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const PatentSchema = new mongoose.Schema({
@@ -165,21 +192,26 @@ const PatentSchema = new mongoose.Schema({
   status:             { type: String, default: 'Filed' },
   authorshipPosition: { type: String, default: '1st' },
   patentOffice:       { type: String, default: 'India' },
+  proof:              { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const R6Schema = new mongoose.Schema({
   patents:      { type: [PatentSchema], default: [] },
   startupTitle: { type: String, default: '' },
   dpiitNumber:  { type: String, default: '' },
+  startupProof: { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
-// ── Self Development sub-schemas ──
+// ─────────────────────────────────────────────
+// SELF DEVELOPMENT
+// ─────────────────────────────────────────────
 
 const FDPSchema = new mongoose.Schema({
   title:               { type: String, default: '' },
   organizingInstitute: { type: String, default: '' },
   numberOfDays:        { type: String, default: '' },
   dates:               { type: String, default: '' },
+  proof:               { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const WorkshopSchema = new mongoose.Schema({
@@ -187,6 +219,7 @@ const WorkshopSchema = new mongoose.Schema({
   organizingInstitute: { type: String, default: '' },
   numberOfWeeks:       { type: String, default: '' },
   dates:               { type: String, default: '' },
+  proof:               { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const RefresherSchema = new mongoose.Schema({
@@ -194,6 +227,7 @@ const RefresherSchema = new mongoose.Schema({
   organizingInstitute: { type: String, default: '' },
   numberOfWeeks:       { type: String, default: '' },
   dates:               { type: String, default: '' },
+  proof:               { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const MOOCSchema = new mongoose.Schema({
@@ -202,6 +236,7 @@ const MOOCSchema = new mongoose.Schema({
   duration:       { type: String, default: '' },
   startDate:      { type: String, default: '' },
   completionDate: { type: String, default: '' },
+  proof:          { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
 const PhDCandidateSchema = new mongoose.Schema({
@@ -213,10 +248,10 @@ const PhDCandidateSchema = new mongoose.Schema({
 }, { _id: false });
 
 const PhDRegistrationSchema = new mongoose.Schema({
-  university:      { type: String, default: '' },
-  enrollmentNo:    { type: String, default: '' },
-  status:          { type: String, default: 'Synopsis Submitted' },
-  supervisorBFGI:  { type: String, default: 'No' },
+  university:     { type: String, default: '' },
+  enrollmentNo:   { type: String, default: '' },
+  status:         { type: String, default: 'Synopsis Submitted' },
+  supervisorBFGI: { type: String, default: 'No' },
 }, { _id: false });
 
 const SD5Schema = new mongoose.Schema({
@@ -229,9 +264,12 @@ const AwardSchema = new mongoose.Schema({
   organizationName: { type: String, default: '' },
   scope:            { type: String, default: 'National' },
   dateOfAward:      { type: String, default: '' },
+  proof:            { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
-// ── Main Submission Schema ──
+// ─────────────────────────────────────────────
+// MAIN SUBMISSION SCHEMA
+// ─────────────────────────────────────────────
 
 const SubmissionSchema = new mongoose.Schema({
   facultyName:  { type: String, required: true },
@@ -252,12 +290,12 @@ const SubmissionSchema = new mongoose.Schema({
   r6Patents:          { type: R6Schema,                default: () => ({}) },
 
   // Self Development
-  sd1FDP:      { type: [FDPSchema],      default: [] },
-  sd2Workshop: { type: [WorkshopSchema], default: [] },
-  sd3Refresher:{ type: [RefresherSchema],default: [] },
-  sd4MOOCs:    { type: [MOOCSchema],     default: [] },
-  sd5PhD:      { type: SD5Schema,        default: () => ({}) },
-  sd6Awards:   { type: [AwardSchema],    default: [] },
+  sd1FDP:       { type: [FDPSchema],      default: [] },
+  sd2Workshop:  { type: [WorkshopSchema], default: [] },
+  sd3Refresher: { type: [RefresherSchema],default: [] },
+  sd4MOOCs:     { type: [MOOCSchema],     default: [] },
+  sd5PhD:       { type: SD5Schema,        default: () => ({}) },
+  sd6Awards:    { type: [AwardSchema],    default: [] },
 
 }, { timestamps: true });
 

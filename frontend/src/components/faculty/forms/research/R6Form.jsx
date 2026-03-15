@@ -1,7 +1,7 @@
-
 import { Plus, Trash2, Upload } from 'lucide-react';
-import styles from '../../../utils/styles';
+import styles from '../../../../utils/styles'
 import { Upload as UploadIcon } from 'lucide-react';
+import PDFUpload from '../../PDFUpload';
 
 const EMPTY_PATENT = () => ({ id: String(Date.now()+Math.random()), patentTitle:'', dateOfPublication:'', patentNo:'', status:'Filed', authorshipPosition:'1st', patentOffice:'India' });
 
@@ -48,8 +48,11 @@ export default function R6Form({ data, setData }) {
                   onChange={(e) => update(entry.id, 'patentOffice', e.target.value)}>
                   <option>India</option><option>Australia</option><option>USA</option><option>Europe</option><option>Other</option>
                 </select></div>
-              <div><label style={styles.label}>Proof (PDF)</label>
-                <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+              <div>
+                {/* <label style={styles.label}>Proof (PDF)</label>
+                <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+                 <PDFUpload label="Proof (PDF)" value={entry.proof} onChange={(val) => update(entry.id, 'proof', val)} />
+                </div>
             </div>
           </div>
         ))}
@@ -66,8 +69,11 @@ export default function R6Form({ data, setData }) {
           <div><label style={styles.label}>DPIIT Registration Number</label>
             <input style={styles.input} placeholder="DPIIT no." value={data.dpiitNumber||''}
               onChange={(e) => f('dpiitNumber', e.target.value)} /></div>
-          <div><label style={styles.label}>Proof (PDF)</label>
-            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+          <div>
+            {/* <label style={styles.label}>Proof (PDF)</label>
+            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+            <PDFUpload label="Proof (PDF)" value={data.startupProof} onChange={(val) => f('startupProof', val)} />
+            </div>
         </div>
       </div>
 

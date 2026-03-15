@@ -1,6 +1,6 @@
 
-import styles from '../utils/styles';
-import { STATUS_LABELS } from '../utils/constants';
+import styles from '../../utils/styles';
+import { STATUS_LABELS } from '../../utils/constants';
 
 const COLOR_MAP = {
   draft:              { bg: '#f1f5f9', color: '#64748b' },

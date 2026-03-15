@@ -1,11 +1,11 @@
-
 import { Plus, Trash2, Upload } from 'lucide-react';
-import styles from '../../../utils/styles';
+import styles from '../../../../utils/styles'
+import PDFUpload from '../../PDFUpload';
 
 const EMPTY = () => ({ id: String(Date.now() + Math.random()), title: '', journalName: '', issnNumber: '', yearOfPublication: '', indexing: 'Scopus', authorshipPosition: '1st', volumeIssue: '' });
 
 export default function R1Form({ entries, setEntries }) {
-  const add    = () => setEntries([...entries, EMPTY()]);
+  const add = () => setEntries([...entries, EMPTY()]);
   const remove = (id) => { if (entries.length > 1) setEntries(entries.filter((e) => e.id !== id)); };
   const update = (id, field, value) => setEntries(entries.map((e) => e.id === id ? { ...e, [field]: value } : e));
 
@@ -59,8 +59,13 @@ export default function R1Form({ entries, setEntries }) {
                 onChange={(e) => update(entry.id, 'volumeIssue', e.target.value)} />
             </div>
             <div>
-              <label style={styles.label}>Proof (PDF)</label>
-              <label style={styles.uploadLabel}><Upload size={16} /> Upload PDF<input type="file" accept=".pdf" style={{ display: 'none' }} /></label>
+              {/* <label style={styles.label}>Proof (PDF)</label> */}
+              {/* <label style={styles.uploadLabel}><Upload size={16} /> Upload PDF<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+              <PDFUpload
+                label="Proof (PDF)"
+                value={entry.proof}
+                onChange={(val) => update(entry.id, 'proof', val)}
+              />
             </div>
           </div>
         </div>

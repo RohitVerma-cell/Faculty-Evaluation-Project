@@ -1,5 +1,4 @@
-
-import styles from '../../../utils/styles';
+import styles from '../../../../utils/styles'
 
 const EMPTY_COURSE = (id) => ({ id, courseName: '', session: '', exam: 'Odd', totalStudents: '', studentsCleared: '', percentage: '' });
 

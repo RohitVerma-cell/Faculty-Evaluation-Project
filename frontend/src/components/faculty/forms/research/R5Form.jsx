@@ -1,6 +1,6 @@
-
-import styles from '../../../utils/styles';
+import styles from '../../../../utils/styles'
 import { Upload } from 'lucide-react';
+import PDFUpload from '../../PDFUpload';
 
 export default function R5Form({ data, setData }) {
   const f = (field, value) => setData({ ...data, [field]: value });
@@ -21,8 +21,11 @@ export default function R5Form({ data, setData }) {
           <div><label style={styles.label}>Amount of Consultancy Fees (₹)</label>
             <input type="number" style={styles.input} placeholder="0" value={data.consultancyAmount||''}
               onChange={(e) => f('consultancyAmount', e.target.value)} /></div>
-          <div><label style={styles.label}>Proof (PDF)</label>
-            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+          <div>
+            {/* <label style={styles.label}>Proof (PDF)</label>
+            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+            <PDFUpload label="Proof (PDF)" value={data.consultancyProof} onChange={(val) => f('consultancyProof', val)} />
+            </div>
         </div>
       </div>
 
@@ -36,8 +39,11 @@ export default function R5Form({ data, setData }) {
           <div><label style={styles.label}>Date of Mentoring Sessions</label>
             <input type="date" style={styles.input} value={data.mentoringDate||''}
               onChange={(e) => f('mentoringDate', e.target.value)} /></div>
-          <div><label style={styles.label}>Proof (PDF)</label>
-            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+          <div>
+            {/* <label style={styles.label}>Proof (PDF)</label>
+            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+            <PDFUpload label="Proof (PDF)" value={data.startupProof} onChange={(val) => f('startupProof', val)} />
+            </div>
         </div>
       </div>
 
@@ -51,8 +57,11 @@ export default function R5Form({ data, setData }) {
           <div><label style={styles.label}>Name of Department offering the Project</label>
             <input style={styles.input} placeholder="Department name" value={data.internalDepartment||''}
               onChange={(e) => f('internalDepartment', e.target.value)} /></div>
-          <div><label style={styles.label}>Proof (PDF)</label>
-            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label></div>
+          <div>
+            {/* <label style={styles.label}>Proof (PDF)</label>
+            <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
+             <PDFUpload label="Proof (PDF)" value={data.internalProof} onChange={(val) => f('internalProof', val)} />
+            </div>
         </div>
       </div>
     </div>
