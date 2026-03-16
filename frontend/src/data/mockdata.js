@@ -1,4 +1,3 @@
-// ── data/mockData.js ──
 
 const SUBMISSION = {
   status: 'submitted',

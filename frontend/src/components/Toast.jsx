@@ -1,12 +1,3 @@
-// ── components/Toast.jsx ──
-
-/**
- * Toast
- * Shows a brief notification at the top-right of the screen.
- *
- * Props:
- *   message {string | null}  — pass null to hide
- */
 export default function Toast({ message }) {
   if (!message) return null;
 

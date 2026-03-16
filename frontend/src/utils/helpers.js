@@ -1,4 +1,3 @@
-// ── utils/helpers.js ──
 
 /**
  * Calculates patent marks based on status and type.

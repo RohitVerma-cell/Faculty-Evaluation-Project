@@ -1,5 +1,3 @@
-// ── components/Sidebar.jsx ──
-
 import { useNavigate, useLocation } from 'react-router-dom';
 import { GraduationCap, LayoutDashboard, PenLine, ChevronLeft } from 'lucide-react';
 import styles from '../utils/styles';
@@ -11,12 +9,7 @@ const ICON_MAP = {
   '/entry':     PenLine,
 };
 
-/**
- * Sidebar
- * Props:
- *   sidebarOpen    {boolean}
- *   setSidebarOpen {Function}
- */
+
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const navigate  = useNavigate();
   const location  = useLocation();
