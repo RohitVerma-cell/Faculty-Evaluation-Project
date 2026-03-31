@@ -54,7 +54,11 @@ export default function TL1Form({ data = {}, setData }) {
       {/* ── TL.1.1 Live Projects ── */}
       <div style={styles.card}>
         <div style={styles.sectionTitle}>TL.1.1 — Live Projects</div>
+<<<<<<< HEAD
         <FormulaHint text="1 Project = 5 Marks (Max 10)" />
+=======
+        {/* <FormulaHint text="1 Project = 5 Marks (Max 10)" /> */}
+>>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
         <div style={styles.grid}>
           <div>
             <label style={styles.label}>Number of Live Projects Completed</label>
@@ -90,7 +94,11 @@ export default function TL1Form({ data = {}, setData }) {
       {/* ── TL.1.2 Case Study ── */}
       <div style={styles.card}>
         <div style={styles.sectionTitle}>TL.1.2 — Case Study in Newspaper/Magazine</div>
+<<<<<<< HEAD
         <FormulaHint text="15 × (Students Engaged / Total Mentees) — Max 10" />
+=======
+        {/* <FormulaHint text="15 × (Students Engaged / Total Mentees) — Max 10" /> */}
+>>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
         <div style={styles.grid}>
           <div style={styles.gridFull}>
             <label style={styles.label}>Title of Case Study</label>
@@ -126,7 +134,11 @@ export default function TL1Form({ data = {}, setData }) {
       {/* ── TL.1.3 Articles ── */}
       <div style={styles.card}>
         <div style={styles.sectionTitle}>TL.1.3 — Articles in Newspaper/Magazine</div>
+<<<<<<< HEAD
         <FormulaHint text="15 × (Students Engaged / Total Mentees) — Max 10" />
+=======
+        {/* <FormulaHint text="15 × (Students Engaged / Total Mentees) — Max 10" /> */}
+>>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
         <div style={styles.grid}>
           <div style={styles.gridFull}>
             <label style={styles.label}>Title of Article</label>
@@ -162,7 +174,11 @@ export default function TL1Form({ data = {}, setData }) {
       {/* ── TL.1.4 Paper Writing ── */}
       <div style={styles.card}>
         <div style={styles.sectionTitle}>TL.1.4 — Student Paper Writing</div>
+<<<<<<< HEAD
         <FormulaHint text="15 × (Total Students in Papers / Total Mentees) — Max 10" />
+=======
+        {/* <FormulaHint text="15 × (Total Students in Papers / Total Mentees) — Max 10" /> */}
+>>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
         {(data.studentPapers || []).map((row, i) => (
           <div key={row.id} style={{ ...styles.card, marginBottom: 12, background: '#f8fafc' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
@@ -217,7 +233,11 @@ export default function TL1Form({ data = {}, setData }) {
       {/* ── TL.1.5 Internships ── */}
       <div style={styles.card}>
         <div style={styles.sectionTitle}>TL.1.5 — Student Internships</div>
+<<<<<<< HEAD
         <FormulaHint text="15 × (Number of Interns / Total Mentees) — Max 10" />
+=======
+        {/* <FormulaHint text="15 × (Number of Interns / Total Mentees) — Max 10" /> */}
+>>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
         {(data.internships || []).map((row, i) => (
           <div key={row.id} style={{ ...styles.card, marginBottom: 12, background: '#f8fafc' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
@@ -260,7 +280,11 @@ export default function TL1Form({ data = {}, setData }) {
       {/* ── TL.1.6 Student Patents ── */}
       <div style={styles.card}>
         <div style={styles.sectionTitle}>TL.1.6 — Student Patents</div>
+<<<<<<< HEAD
         <FormulaHint text="15 × (Total Patent Students / Total Mentees) — Max 10" />
+=======
+        {/* <FormulaHint text="15 × (Total Patent Students / Total Mentees) — Max 10" /> */}
+>>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
         {(data.studentPatents || []).map((row, i) => (
           <div key={row.id} style={{ ...styles.card, marginBottom: 12, background: '#f8fafc' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
@@ -310,7 +334,11 @@ export default function TL1Form({ data = {}, setData }) {
       {/* ── TL.1.7 Certificate Programs ── */}
       <div style={styles.card}>
         <div style={styles.sectionTitle}>TL.1.7 — Certificate Programs (min 30 hrs)</div>
+<<<<<<< HEAD
         <FormulaHint text="15 × (Students in Cert Programs / Total Mentees) — Max 10" />
+=======
+        {/* <FormulaHint text="15 × (Students in Cert Programs / Total Mentees) — Max 10" /> */}
+>>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
         <div style={styles.grid}>
           <div>
             <label style={styles.label}>Number of Students in Certificate Programs</label>
