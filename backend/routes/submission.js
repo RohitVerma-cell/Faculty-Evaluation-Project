@@ -70,7 +70,7 @@ router.patch('/:email/submit', async (req, res) => {
   }
 });
 
-// ── PATCH /:email/status ── HoD / Principal / Director / Chairman approval (for future use)
+// ── PATCH /:email/status ── HoD / Principal / Director / Chairman approval 
 router.patch('/:email/status', async (req, res) => {
   try {
     const { newStatus, reviewerRole } = req.body;
