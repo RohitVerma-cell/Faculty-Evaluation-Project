@@ -1,9 +1,7 @@
-// ── src/routes/FacultyRoutes.jsx ──
-// Saare Faculty ke routes yahan hain
-// App.jsx se call hota hai jab role === 'faculty'
-
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect }     from 'react';
+import { useAuth }   from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 import Sidebar       from '../components/faculty/Sidebar';
 import TopBar        from '../components/common/TopBar';
@@ -12,23 +10,23 @@ import Toast         from '../components/common/Toast';
 import DashboardPage from '../pages/faculty/DashboardPage';
 import DataEntryPage from '../pages/faculty/DataEntryPge';
 
-const FACULTY_EMAIL = 'Rishamjot@university.edu';
-const FACULTY_NAME  = 'Er. Rishamjot Kaur';
-const BASE_URL      = 'http://localhost:5000/api/submission';
-
-const addIds = (arr) => (arr || []).map((item, i) => ({ ...item, id: String(i + 1) }));
+const BASE_URL = 'http://localhost:5000/api/submission';
+const addIds   = (arr) => (arr || []).map((item, i) => ({ ...item, id: String(i + 1) }));
 
 export default function FacultyRoutes() {
+  const { user, logout } = useAuth();
+  const navigate         = useNavigate();
+
   const [toastMsg,     setToastMsg]     = useState('');
   const [activeModule, setActiveModule] = useState('teaching');
   const [activeItem,   setActiveItem]   = useState('tl1');
   const [loading,      setLoading]      = useState(true);
 
-  // ── Teaching ──
+  // Teaching
   const [tl1Data, setTl1Data] = useState({});
   const [tl4Data, setTl4Data] = useState({});
 
-  // ── Research ──
+  // Research
   const [r1Entries, setR1Entries] = useState([]);
   const [r2Data,    setR2Data]    = useState({});
   const [r3Entries, setR3Entries] = useState([]);
@@ -36,7 +34,7 @@ export default function FacultyRoutes() {
   const [r5Data,    setR5Data]    = useState({});
   const [r6Data,    setR6Data]    = useState({});
 
-  // ── Self Development ──
+  // Self Development
   const [sd1Entries, setSd1Entries] = useState([]);
   const [sd2Entries, setSd2Entries] = useState([]);
   const [sd3Entries, setSd3Entries] = useState([]);
@@ -44,11 +42,13 @@ export default function FacultyRoutes() {
   const [sd5Data,    setSd5Data]    = useState({});
   const [sd6Entries, setSd6Entries] = useState([]);
 
-  // ── Fetch from MongoDB on load ──
+  // ── Fetch from MongoDB — user.email se ──
   useEffect(() => {
+    if (!user?.email) { setLoading(false); return; }
+
     const fetchData = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/${FACULTY_EMAIL}`);
+        const res = await fetch(`${BASE_URL}/${user.email}`);
         if (!res.ok) { setLoading(false); return; }
         const data = await res.json();
 
@@ -76,9 +76,9 @@ export default function FacultyRoutes() {
       }
     };
     fetchData();
-  }, []);
+  }, [user?.email]);
 
-  // ── Loading ──
+  // Loading
   if (loading) {
     return (
       <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main, #f8fafc)', fontFamily: "'Inter', sans-serif" }}>
@@ -91,7 +91,6 @@ export default function FacultyRoutes() {
     );
   }
 
-  // ── Shared props ──
   const marksProps = {
     tl1Data, tl4Data,
     r1Entries, r2Data, r3Entries, r4Data, r5Data, r6Data,
@@ -104,45 +103,47 @@ export default function FacultyRoutes() {
     setSd1Entries, setSd2Entries, setSd3Entries, setSd4Entries, setSd5Data, setSd6Entries,
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
+
   return (
     <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', fontFamily: "'Inter', sans-serif" }}>
 
-      {/* ── Faculty Sidebar ── */}
       <Sidebar
         activeModule={activeModule}
         activeItem={activeItem}
         onModuleItemSelect={(mod, item) => { setActiveModule(mod); setActiveItem(item); }}
+        onLogout={handleLogout}
       />
 
-      {/* ── Right side ── */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-
-        {/* TopBar — notification bell visible (role=faculty) */}
         <TopBar
           role="faculty"
-          userName={FACULTY_NAME}
-          userDept="CSE Department"
+          userName={user?.name || ''}
+          userDept={user?.dept || ''}
+          onLogout={handleLogout}
         />
 
-        {/* Page Content */}
         <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', background: 'var(--bg-main, #f8fafc)' }}>
           <div style={{ padding: 28, maxWidth: '100%', boxSizing: 'border-box' }}>
             <Routes>
-              <Route index                element={<Navigate to="dashboard" replace />} />
-              <Route path="dashboard"     element={<DashboardPage {...marksProps} />} />
-              <Route path="entry"         element={
+              <Route index            element={<Navigate to="dashboard" replace />} />
+              <Route path="dashboard" element={<DashboardPage {...marksProps} />} />
+              <Route path="entry"     element={
                 <DataEntryPage
                   setToastMsg={setToastMsg}
                   activeModule={activeModule}
                   activeItem={activeItem}
                   setActiveModule={setActiveModule}
                   setActiveItem={setActiveItem}
+                  facultyEmail={user?.email}
+                  facultyName={user?.name}
                   {...marksProps}
                   {...setterProps}
                 />
               } />
-              {/* Future faculty routes yahan add karo */}
-              {/* <Route path="profile"  element={<ProfilePage />} /> */}
             </Routes>
           </div>
         </div>
