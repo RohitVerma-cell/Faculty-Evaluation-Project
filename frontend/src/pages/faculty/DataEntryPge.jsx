@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Save, Send, BookOpen, FlaskConical, GraduationCap } from 'lucide-react';
 
@@ -11,7 +10,7 @@ import R4Form  from '../../components/faculty/forms/research/R4Form';
 import R5Form  from '../../components/faculty/forms/research/R5Form';
 import R6Form  from '../../components/faculty/forms/research/R6Form';
 // import { SD1Form, SD2Form, SD3Form, SD4Form, SD5Form, SD6Form } from '../../components/faculty/forms/selfdevelopment/SDForms';
- import { SD1Form, SD2Form, SD3Form, SD4Form, SD5Form, SD6Form } from '../../components/faculty/forms/self-development/SDForm'
+ import { SD1Form, SD2Form, SD3Form, SD4Form, SD5Form, SD6Form } from '../../components/faculty/forms/self-development/SDForm';
 import { calcTLTotal, calcResearchTotal, calcSDTotal, calcGrandTotal } from '../../utils/marksCalculator';
 
 const BASE_URL      = 'http://localhost:5000/api/submission';
