@@ -1,15 +1,17 @@
 const mongoose = require('mongoose');
 
-// ── Reusable Proof Schema
+// ── Reusable Proof Schema (stored for every upload) ──
 const ProofSchema = new mongoose.Schema({
-  fileId:       { type: String, default: '' }, 
-  filePath:     { type: String, default: '' }, 
-  fileName:     { type: String, default: '' }, 
-  originalName: { type: String, default: '' }, 
-  size:         { type: Number, default: 0  }, 
+  fileId:       { type: String, default: '' }, // ← NEW (ImageKit fileId)
+  filePath:     { type: String, default: '' }, // ab ImageKit URL hoga
+  fileName:     { type: String, default: '' }, // saved filename on disk
+  originalName: { type: String, default: '' }, // original uploaded name
+  size:         { type: Number, default: 0  }, // bytes
 }, { _id: false });
 
+// ─────────────────────────────────────────────
 // TEACHING LEARNING
+// ─────────────────────────────────────────────
 
 const StudentPaperSchema = new mongoose.Schema({
   title:    { type: String, default: '' },
@@ -267,6 +269,15 @@ const AwardSchema = new mongoose.Schema({
   proof:            { type: ProofSchema, default: () => ({}) },
 }, { _id: false });
 
+const CalculatedMarksSchema = new mongoose.Schema({
+  tl:         { type: Number, default: 0 },
+  research:   { type: Number, default: 0 },
+  sd:         { type: Number, default: 0 },
+  grandTotal: { type: Number, default: 0 },
+  hodMarks:   { type: Number, default: 0 },
+  finalTotal: { type: Number, default: 0 },
+}, { _id: false });
+
 // ─────────────────────────────────────────────
 // MAIN SUBMISSION SCHEMA
 // ─────────────────────────────────────────────
@@ -296,6 +307,8 @@ const SubmissionSchema = new mongoose.Schema({
   sd4MOOCs:     { type: [MOOCSchema],     default: [] },
   sd5PhD:       { type: SD5Schema,        default: () => ({}) },
   sd6Awards:    { type: [AwardSchema],    default: [] },
+
+  calculatedMarks: { type: CalculatedMarksSchema, default: () => ({}) },
 
 }, { timestamps: true });
 
