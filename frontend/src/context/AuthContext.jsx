@@ -70,7 +70,7 @@ const AuthContext = createContext();
 // ── Temporary Users List (later DB se aayega)
 const TEMP_USERS = [
   // Faculty
-  { email: 'rishamjot@university.edu',  password: '1234', role: 'faculty', name: 'Er. Rishamjot Kaur',  dept: 'CSE Department' },
+  { email: 'Rishamjot@university.edu',  password: '1234', role: 'faculty', name: 'Er. Rishamjot Kaur',  dept: 'CSE Department' },
   { email: 'ananya@university.edu',     password: '1234', role: 'faculty', name: 'Dr. Ananya Sharma',   dept: 'CSE Department' },
   { email: 'rajesh@university.edu',     password: '1234', role: 'faculty', name: 'Dr. Rajesh Kumar',    dept: 'ECE Department' },
   { email: 'priya@university.edu',      password: '1234', role: 'faculty', name: 'Dr. Priya Singh',     dept: 'ME Department'  },
