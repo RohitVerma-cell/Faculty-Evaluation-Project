@@ -66,4 +66,53 @@ const getFacultiesData = async (req, res) => {
     }
 }
 
-module.exports = { addFaculty, getFacultiesData }
+const getFacultiesDataById = async (req, res) => {
+    try {
+        const facultyId = req.params.facultyId;
+        const facultyData = await facultyModel.findById(facultyId);
+        if (!facultyData) {
+            return res.json({
+                message: "Faculty does not Exist",
+                success: false
+            })
+        }
+
+        return res.json({
+            message: "Successfully fetch data",
+            data: facultyData
+        })
+
+    } catch (error) {
+        console.log(error.message)
+        res.json({
+            message: error.message,
+            success: false
+        })
+    }
+}
+
+const deleteFaculty = async (req, res) => {
+    try {
+        const facultyId = req.params.facultyId
+        if (!facultyId) {
+            return res.json({
+                message: "Faculty does not Exist",
+                success: false
+            })
+        }
+
+        await facultyModel.findByIdAndDelete(facultyId);
+        return res.json({
+            message: "Faculty Deleted fuccessfully",
+            success: true
+        })
+    } catch (error) {
+        console.log(error.message)
+        res.json({
+            message: error.message,
+            success: false
+        })
+    }
+}
+
+module.exports = { addFaculty, getFacultiesData, getFacultiesDataById, deleteFaculty }
