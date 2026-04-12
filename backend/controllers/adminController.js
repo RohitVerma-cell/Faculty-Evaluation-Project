@@ -1,6 +1,34 @@
 const facultyModel = require("../models/facultyModel")
 // const facultyModel = require("../models/facultyModel");
 const bcrypt = require('bcrypt')
+require('dotenv').config();
+const jwt = require("jsonwebtoken")
+
+
+const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        if (email === process.env.EMAIL && password === process.env.PASS) {
+            const token = jwt.sign(
+                { mail: email },
+                process.env.JWT_SECRET,
+                { expiresIn: "24h" }
+            )
+            return res.json({
+                message: "Login SuccessFully",
+                success: true,
+                token
+            })
+        }
+    } catch (error) {
+         console.log(error.message)
+        res.json({
+            message: error.message,
+            success: false
+        })
+    }
+}
 
 const addFaculty = async (req, res) => {
 
@@ -115,4 +143,4 @@ const deleteFaculty = async (req, res) => {
     }
 }
 
-module.exports = { addFaculty, getFacultiesData, getFacultiesDataById, deleteFaculty }
+module.exports = { addFaculty, getFacultiesData, getFacultiesDataById, deleteFaculty, login }
