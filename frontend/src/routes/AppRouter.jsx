@@ -73,6 +73,7 @@ import { useAuth } from '../context/AuthContext';
 import FacultyRoutes from './FacultyRoutes';
 import HODRoutes from './HODRoutes';
 import LoginPage from '../pages/auth/Login';
+import Admin from '../pages/Admin/Admin';
 
 const ROLE_HOME = {
   faculty: '/faculty/dashboard',
@@ -122,6 +123,9 @@ export default function AppRouter() {
               : <HODRoutes />
         }
       />
+
+      {/* Admin Route */}
+      <Route path="/admin*" element={<Admin />} />
 
       {/* ── Future Routes ── */}
       {/* <Route path="/principal/*" element={...} /> */}

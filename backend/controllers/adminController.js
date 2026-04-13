@@ -2,27 +2,79 @@ const facultyModel = require("../models/facultyModel")
 // const facultyModel = require("../models/facultyModel");
 const bcrypt = require('bcrypt')
 require('dotenv').config();
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const adminModel = require("../models/adminModel");
 
+const createAdmin = async (req, res) => {
+    const { email, password, fullname } = req.body
+    try {
+        const isExist = await adminModel.findOne({ email });
+        if (isExist) {
+            return res.json({
+                message: "Email already Exist",
+                success: false
+            })
+        }
+
+        const hashedPass = await bcrypt.hash(password, 15)
+
+        const adminData = new adminModel({
+            email,
+            password: hashedPass,
+            fullname
+        })
+
+        await adminData.save();
+        return res.json({
+            message: "Registered successfully",
+            success: true
+        })
+
+    } catch (error) {
+        console.log(error.message)
+        res.json({
+            message: error.message,
+            success: false
+        })
+    }
+}
 
 const login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        if (email === process.env.EMAIL && password === process.env.PASS) {
-            const token = jwt.sign(
-                { mail: email },
-                process.env.JWT_SECRET,
-                { expiresIn: "24h" }
-            )
+
+        const admin = await adminModel.findOne({ email })
+
+        if (!admin) {
             return res.json({
-                message: "Login SuccessFully",
-                success: true,
-                token
+                message: "Admin not registered",
+                success: false
             })
         }
+
+        const isMatch = await bcrypt.compare(password, admin.password)
+
+        if (!isMatch) {
+            return res.json({
+                message: "Incorect Password",
+                success: false
+            })
+        }
+
+        const token = jwt.sign(
+            { adminId: admin._id, adminEmail: admin.email },
+            process.env.JWT_SECRET,
+            { expiresIn: "24h" }
+        )
+        return res.json({
+            message: "Login SuccessFully",
+            success: true,
+            token,
+            data: admin
+        })
     } catch (error) {
-         console.log(error.message)
+        console.log(error.message)
         res.json({
             message: error.message,
             success: false
@@ -32,7 +84,7 @@ const login = async (req, res) => {
 
 const addFaculty = async (req, res) => {
 
-    const { fullname, email, password } = req.body;
+    const { fullname, email, password, department } = req.body;
 
     try {
 
@@ -53,11 +105,12 @@ const addFaculty = async (req, res) => {
         }
 
         const hashedPass = await bcrypt.hash(password, 15)
-        console.log(hashedPass)
+        // console.log(hashedPass)
         const facultyData = new facultyModel({
             fullname,
             email,
-            password: hashedPass
+            password: hashedPass,
+            department
         })
 
         await facultyData.save();
@@ -143,4 +196,4 @@ const deleteFaculty = async (req, res) => {
     }
 }
 
-module.exports = { addFaculty, getFacultiesData, getFacultiesDataById, deleteFaculty, login }
+module.exports = { addFaculty, getFacultiesData, getFacultiesDataById, deleteFaculty, login, createAdmin }
