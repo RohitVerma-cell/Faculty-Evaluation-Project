@@ -17,6 +17,10 @@ app.use(express.json({ limit: '10mb' }));
 app.use('/api/submission', submission);
 app.use('/api/upload',     upload);
 
+
+// const principal = require('./routes/principle');
+// app.use('/api/principal', principal);
+
 app.get('/', (req, res) => res.json({ message: 'SAP-2025 Backend running' }));
 
 const PORT = process.env.PORT || 5000;
