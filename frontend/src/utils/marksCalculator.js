@@ -1,6 +1,9 @@
 const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
 const toNum = (val) => parseFloat(val) || 0;
 
+// ─────────────────────────────────────────────
+// TEACHING LEARNING (Max: 110)
+// ─────────────────────────────────────────────
 
 // TL.1.1: 1 project = 5 marks, max 10
 function calcTL1_1(liveProjectCount) {
@@ -82,11 +85,17 @@ export function calcTLTotal(tl1Data, tl4Data) {
   };
 }
 
+// ─────────────────────────────────────────────
+// RESEARCH (Max: 125)
+// ─────────────────────────────────────────────
 
 // R.1 — Journal Papers — Max 25
 export function calcR1(papers) {
   let total = 0;
   (papers || []).forEach((p) => {
+    if (!p.title?.trim()) return;              // blank — skip
+    if (!p.indexing) return;                   // indexing select nahi — skip
+    if (!p.authorshipPosition) return;         // position select nahi — skip
     const is1st = p.authorshipPosition === '1st';
     switch (p.indexing) {
       case 'SCI':         total += is1st ? 12 : 6;  break;
@@ -104,6 +113,9 @@ export function calcR2(r2Data) {
   const indexed = ['Scopus', 'IEEE', 'Wiley', 'Springer'];
 
   (r2Data.books || []).forEach((b) => {
+    if (!b.title?.trim()) return;
+    if (!b.authorshipPosition) return;
+    if (!b.publisher) return;
     const is1st = b.authorshipPosition === '1st';
     if (indexed.includes(b.indexing))        total += is1st ? 10 : 6;
     else if (b.publisher === 'International') total += is1st ? 8  : 5;
@@ -111,10 +123,15 @@ export function calcR2(r2Data) {
   });
 
   (r2Data.bookChapters || []).forEach((c) => {
+    if (!c.chapterTitle?.trim()) return;
+    if (!c.authorshipPosition) return;
     total += c.authorshipPosition === '1st' ? 5 : 3;
   });
 
   (r2Data.editorBooks || []).forEach((e) => {
+    if (!e.title?.trim()) return;
+    if (!e.authorshipPosition) return;
+    if (!e.publisher) return;
     const is1st = e.authorshipPosition === '1st';
     total += e.publisher === 'International' ? (is1st ? 7 : 5) : (is1st ? 5 : 3);
   });
@@ -128,6 +145,9 @@ export function calcR3(papers) {
   const indexed = ['Scopus', 'IEEE', 'Wiley', 'Springer'];
 
   (papers || []).forEach((p) => {
+    if (!p.paperTitle?.trim()) return;
+    if (!p.authorshipPosition) return;
+    if (!p.publisher) return;
     const is1st = p.authorshipPosition === '1st';
     if (indexed.includes(p.indexing))         total += is1st ? 7   : 3.5;
     else if (p.publisher === 'International') total += is1st ? 4   : 2;
@@ -142,6 +162,9 @@ export function calcR4(r4Data) {
   let total = 0;
 
   (r4Data.externalProjects || []).forEach((p) => {
+    if (!p.projectTitle?.trim()) return;
+    if (!p.role) return;
+    if (!p.status) return;
     const amt = toNum(p.amount);
     if ((p.agency || '').toLowerCase().includes('bfgi')) total += 5;
     else if (amt === 0)        total += 5;
@@ -150,6 +173,8 @@ export function calcR4(r4Data) {
   });
 
   (r4Data.industryProjects || []).forEach((p) => {
+    if (!p.projectTitle?.trim()) return;
+    if (!p.role) return;
     const amt = toNum(p.amount);
     if      (amt >= 50000 && amt < 100000) total += 10;
     else if (amt >= 100000)                total += 15;
@@ -175,6 +200,9 @@ export function calcR5(r5Data) {
 export function calcR6(r6Data) {
   let total = 0;
   (r6Data.patents || []).forEach((p) => {
+    if (!p.patentTitle?.trim()) return;
+    if (!p.authorshipPosition) return;
+    if (!p.status) return;
     const is1st = p.authorshipPosition === '1st';
     total += p.status === 'Granted'
       ? (is1st ? 25 : 12.5)
@@ -199,10 +227,16 @@ export function calcResearchTotal(r1, r2Data, r3, r4Data, r5Data, r6Data) {
   };
 }
 
+// ─────────────────────────────────────────────
+// SELF DEVELOPMENT (Max: 65)
+// ─────────────────────────────────────────────
+
 // SD.1 — FDP — Max 10
 export function calcSD1(entries) {
   let total = 0;
   (entries || []).forEach((e) => {
+    if (!e.title?.trim()) return;
+    if (!e.numberOfDays) return;
     const d = toNum(e.numberOfDays);
     if      (d >= 5) total += 10;
     else if (d >= 4) total += 7;
@@ -214,7 +248,11 @@ export function calcSD1(entries) {
 // SD.2 — Workshop — Max 10
 export function calcSD2(entries) {
   let total = 0;
-  (entries || []).forEach((e) => { if (toNum(e.numberOfWeeks) >= 2) total += 6; });
+  (entries || []).forEach((e) => {
+    if (!e.title?.trim()) return;
+    if (!e.numberOfWeeks) return;
+    if (toNum(e.numberOfWeeks) >= 2) total += 6;
+  });
   return clamp(total, 0, 10);
 }
 
@@ -222,6 +260,8 @@ export function calcSD2(entries) {
 export function calcSD3(entries) {
   let total = 0;
   (entries || []).forEach((e) => {
+    if (!e.title?.trim()) return;
+    if (!e.numberOfWeeks) return;
     const w = toNum(e.numberOfWeeks);
     if      (w >= 4) total += 10;
     else if (w >= 3) total += 7;
@@ -255,7 +295,11 @@ export function calcSD5(sd5Data) {
 // SD.6 — Awards — Max 15
 export function calcSD6(entries) {
   let total = 0;
-  (entries || []).forEach((e) => { total += e.scope === 'International' ? 15 : 5; });
+  (entries || []).forEach((e) => {
+    if (!e.awardTitle?.trim()) return;
+    if (!e.scope) return;
+    total += e.scope === 'International' ? 15 : 5;
+  });
   return clamp(total, 0, 15);
 }
 
@@ -270,6 +314,9 @@ export function calcSDTotal(sd1, sd2, sd3, sd4, sd5Data, sd6) {
   };
 }
 
+// ─────────────────────────────────────────────
+// GRAND TOTAL
+// ─────────────────────────────────────────────
 
 export function calcGrandTotal(tlTotal, researchTotal, sdTotal) {
   return {

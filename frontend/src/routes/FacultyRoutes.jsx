@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect }     from 'react';
-import { useAuth }   from '../context/AuthContext';
+import { useAuth }     from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 import Sidebar       from '../components/faculty/Sidebar';
@@ -17,10 +17,11 @@ export default function FacultyRoutes() {
   const { user, logout } = useAuth();
   const navigate         = useNavigate();
 
-  const [toastMsg,     setToastMsg]     = useState('');
-  const [activeModule, setActiveModule] = useState('teaching');
-  const [activeItem,   setActiveItem]   = useState('tl1');
-  const [loading,      setLoading]      = useState(true);
+  const [toastMsg,          setToastMsg]          = useState('');
+  const [activeModule,      setActiveModule]      = useState('teaching');
+  const [activeItem,        setActiveItem]        = useState('tl1');
+  const [loading,           setLoading]           = useState(true);
+  const [submissionStatus,  setSubmissionStatus]  = useState('draft'); // ← real status
 
   // Teaching
   const [tl1Data, setTl1Data] = useState({});
@@ -42,7 +43,7 @@ export default function FacultyRoutes() {
   const [sd5Data,    setSd5Data]    = useState({});
   const [sd6Entries, setSd6Entries] = useState([]);
 
-  // ── Fetch from MongoDB — user.email se ──
+  // ── Fetch from MongoDB on load ──
   useEffect(() => {
     if (!user?.email) { setLoading(false); return; }
 
@@ -52,9 +53,14 @@ export default function FacultyRoutes() {
         if (!res.ok) { setLoading(false); return; }
         const data = await res.json();
 
+        // ── Real status ──
+        if (data.status) setSubmissionStatus(data.status);
+
+        // Teaching
         if (data.tl1) setTl1Data(data.tl1);
         if (data.tl4) setTl4Data(data.tl4);
 
+        // Research
         if (data.r1JournalPapers?.length)    setR1Entries(addIds(data.r1JournalPapers));
         if (data.r2Books)                    setR2Data(data.r2Books);
         if (data.r3ConferencePapers?.length) setR3Entries(addIds(data.r3ConferencePapers));
@@ -62,6 +68,7 @@ export default function FacultyRoutes() {
         if (data.r5Consultancy)              setR5Data(data.r5Consultancy);
         if (data.r6Patents)                  setR6Data(data.r6Patents);
 
+        // Self Development
         if (data.sd1FDP?.length)       setSd1Entries(addIds(data.sd1FDP));
         if (data.sd2Workshop?.length)  setSd2Entries(addIds(data.sd2Workshop));
         if (data.sd3Refresher?.length) setSd3Entries(addIds(data.sd3Refresher));
@@ -78,15 +85,15 @@ export default function FacultyRoutes() {
     fetchData();
   }, [user?.email]);
 
-  // Loading
+  // Loading screen
   if (loading) {
     return (
-      <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main, #f8fafc)', fontFamily: "'Inter', sans-serif" }}>
+      <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main,#f8fafc)', fontFamily: "'Inter',sans-serif" }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ width: 40, height: 40, border: '3px solid #e2e8f0', borderTop: '3px solid #6366f1', borderRadius: '50%', animation: 'spin 0.8s linear infinite', margin: '0 auto 12px' }} />
           <p style={{ color: '#64748b', fontSize: 14, margin: 0 }}>Loading your data…</p>
         </div>
-        <style>{`@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }`}</style>
+        <style>{`@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`}</style>
       </div>
     );
   }
@@ -103,13 +110,10 @@ export default function FacultyRoutes() {
     setSd1Entries, setSd2Entries, setSd3Entries, setSd4Entries, setSd5Data, setSd6Entries,
   };
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login', { replace: true });
-  };
+  const handleLogout = () => { logout(); navigate('/login', { replace: true }); };
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', fontFamily: "'Inter', sans-serif" }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', fontFamily: "'Inter',sans-serif" }}>
 
       <Sidebar
         activeModule={activeModule}
@@ -119,18 +123,18 @@ export default function FacultyRoutes() {
       />
 
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        <TopBar
-          role="faculty"
-          userName={user?.name || ''}
-          userDept={user?.dept || ''}
-          onLogout={handleLogout}
-        />
+        <TopBar role="faculty" userName={user?.name || ''} userDept={user?.dept || ''} onLogout={handleLogout} />
 
-        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', background: 'var(--bg-main, #f8fafc)' }}>
+        <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', background: 'var(--bg-main,#f8fafc)' }}>
           <div style={{ padding: 28, maxWidth: '100%', boxSizing: 'border-box' }}>
             <Routes>
               <Route index            element={<Navigate to="dashboard" replace />} />
-              <Route path="dashboard" element={<DashboardPage {...marksProps} />} />
+              <Route path="dashboard" element={
+                <DashboardPage
+                  {...marksProps}
+                  submissionStatus={submissionStatus} // ← real status pass
+                />
+              } />
               <Route path="entry"     element={
                 <DataEntryPage
                   setToastMsg={setToastMsg}
@@ -140,6 +144,8 @@ export default function FacultyRoutes() {
                   setActiveItem={setActiveItem}
                   facultyEmail={user?.email}
                   facultyName={user?.name}
+                  // ── Status update karo jab submit ho ──
+                  onStatusChange={(newStatus) => setSubmissionStatus(newStatus)}
                   {...marksProps}
                   {...setterProps}
                 />

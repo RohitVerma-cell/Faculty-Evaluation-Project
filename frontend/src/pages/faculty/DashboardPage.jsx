@@ -59,7 +59,7 @@ export default function DashboardPage({
   tl1Data, tl4Data,
   r1Entries, r2Data, r3Entries, r4Data, r5Data, r6Data,
   sd1Entries, sd2Entries, sd3Entries, sd4Entries, sd5Data, sd6Entries,
-  submissionStatus = 'draft', // real status baad mein fetch hoga
+  submissionStatus = 'draft',
 }) {
   const { user } = useAuth();
   const [modalPDF, setModalPDF] = useState(null);

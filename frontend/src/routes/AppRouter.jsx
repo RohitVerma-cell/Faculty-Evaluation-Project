@@ -1,74 +1,9 @@
-// import { Routes, Route, Navigate } from 'react-router-dom';
-// import { useAuth }   from '../context/AuthContext';
-// import FacultyRoutes from './FacultyRoutes';
-// import HODRoutes     from './HODRoutes';
-// import LoginPage     from '../pages/auth/Login';
-
-// const ROLE_HOME = {
-//   faculty:   '/faculty/dashboard',
-//   hod:       '/HOD/dashboard',
-//   principal: '/principal/dashboard',
-// };
-
-// export default function AppRouter() {
-//   const { user } = useAuth();
-
-//   return (
-//     <Routes>
-
-//       {/* ── Login Page ── */}
-//       <Route
-//         path="/login"
-//         element={
-//           // Already logged in toh redirect karo
-//           user
-//             ? <Navigate to={ROLE_HOME[user.role] || '/faculty/dashboard'} replace />
-//             : <LoginPage />
-//         }
-//       />
-
-//       {/* ── Faculty Routes ── */}
-//       <Route
-//         path="/faculty/*"
-//         element={
-//           !user
-//             ? <Navigate to="/login" replace />
-//             : user.role !== 'faculty'
-//               ? <Navigate to={ROLE_HOME[user.role]} replace />
-//               : <FacultyRoutes />
-//         }
-//       />
-
-//       {/* ── HoD Routes ── */}
-//       <Route
-//         path="/HOD/*"
-//         element={
-//           !user
-//             ? <Navigate to="/login" replace />
-//             : user.role !== 'hod'
-//               ? <Navigate to={ROLE_HOME[user.role]} replace />
-//               : <HODRoutes />
-//         }
-//       />
-
-//       {/* ── Future Routes ── */}
-//       {/* <Route path="/principal/*" element={...} /> */}
-
-//       {/* ── Default ── */}
-//       <Route
-//         path="*"
-//         element={
-//           user
-//             ? <Navigate to={ROLE_HOME[user.role] || '/faculty/dashboard'} replace />
-//             : <Navigate to="/login" replace />
-//         }
-//       />
-
-//     </Routes>
-//   );
-// }
-
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth }        from '../context/AuthContext';
+import FacultyRoutes      from './FacultyRoutes';
+import HODRoutes          from './HODRoutes';
+import ChairmanRoutes     from './ChairmanRoutes';
+import LoginPage          from '../pages/auth/Login';
 import { useAuth } from '../context/AuthContext';
 import FacultyRoutes from './FacultyRoutes';
 import HODRoutes from './HODRoutes';
@@ -76,19 +11,47 @@ import LoginPage from '../pages/auth/Login';
 import Admin from '../pages/Admin/Admin';
 
 const ROLE_HOME = {
-  faculty: '/faculty/dashboard',
-  hod: '/HOD/dashboard',
-  principal: '/principal/dashboard',
+  faculty:   '/faculty/dashboard',
+  hod:       '/HOD/dashboard',
+  chairman:  '/chairman/dashboard',
 };
 
 export default function AppRouter() {
   const { user } = useAuth();
 
-  // ✅ Normalize role (fixes Faculty vs faculty issue)
-  const role = user?.role?.toLowerCase();
-
   return (
     <Routes>
+      <Route path="/login" element={
+        user ? <Navigate to={ROLE_HOME[user.role] || '/login'} replace /> : <LoginPage />
+      } />
+
+      <Route path="/faculty/*" element={
+        !user ? <Navigate to="/login" replace />
+          : user.role !== 'faculty' ? <Navigate to={ROLE_HOME[user.role]} replace />
+          : <FacultyRoutes />
+      } />
+
+      <Route path="/HOD/*" element={
+        !user ? <Navigate to="/login" replace />
+          : user.role !== 'hod' ? <Navigate to={ROLE_HOME[user.role]} replace />
+          : <HODRoutes />
+      } />
+
+      {/* <Route path="/principal/*" element={
+        !user ? <Navigate to="/login" replace />
+          : user.role !== 'principal' ? <Navigate to={ROLE_HOME[user.role]} replace />
+          : <PrincipalRoutes />
+      } /> */}
+
+      <Route path="/chairman/*" element={
+        !user ? <Navigate to="/login" replace />
+          : user.role !== 'chairman' ? <Navigate to={ROLE_HOME[user.role]} replace />
+          : <ChairmanRoutes />
+      } />
+
+      <Route path="*" element={
+        user ? <Navigate to={ROLE_HOME[user.role] || '/login'} replace /> : <Navigate to="/login" replace />
+      } />
 
       {/* ── Login Page ── */}
       <Route
