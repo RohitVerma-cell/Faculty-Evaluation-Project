@@ -4,6 +4,11 @@ import FacultyRoutes      from './FacultyRoutes';
 import HODRoutes          from './HODRoutes';
 import ChairmanRoutes     from './ChairmanRoutes';
 import LoginPage          from '../pages/auth/Login';
+import { useAuth } from '../context/AuthContext';
+import FacultyRoutes from './FacultyRoutes';
+import HODRoutes from './HODRoutes';
+import LoginPage from '../pages/auth/Login';
+import Admin from '../pages/Admin/Admin';
 
 const ROLE_HOME = {
   faculty:   '/faculty/dashboard',
@@ -47,6 +52,57 @@ export default function AppRouter() {
       <Route path="*" element={
         user ? <Navigate to={ROLE_HOME[user.role] || '/login'} replace /> : <Navigate to="/login" replace />
       } />
+
+      {/* ── Login Page ── */}
+      <Route
+        path="/login"
+        element={
+          user
+            ? <Navigate to={ROLE_HOME[role] || '/faculty/dashboard'} replace />
+            : <LoginPage />
+        }
+      />
+
+      {/* ── Faculty Routes ── */}
+      <Route
+        path="/faculty/*"
+        element={
+          !user
+            ? <Navigate to="/login" replace />
+            : role !== 'faculty'
+              ? <Navigate to={ROLE_HOME[role] || '/login'} replace />
+              : <FacultyRoutes />
+        }
+      />
+
+      {/* ── HoD Routes ── */}
+      <Route
+        path="/HOD/*"
+        element={
+          !user
+            ? <Navigate to="/login" replace />
+            : role !== 'hod'
+              ? <Navigate to={ROLE_HOME[role] || '/login'} replace />
+              : <HODRoutes />
+        }
+      />
+
+      {/* Admin Route */}
+      <Route path="/admin*" element={<Admin />} />
+
+      {/* ── Future Routes ── */}
+      {/* <Route path="/principal/*" element={...} /> */}
+
+      {/* ── Default Route ── */}
+      <Route
+        path="*"
+        element={
+          user
+            ? <Navigate to={ROLE_HOME[role] || '/faculty/dashboard'} replace />
+            : <Navigate to="/login" replace />
+        }
+      />
+
     </Routes>
   );
 }
