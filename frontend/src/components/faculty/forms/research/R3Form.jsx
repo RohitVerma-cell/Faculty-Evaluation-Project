@@ -1,8 +1,14 @@
-import { Plus, Trash2, Upload } from 'lucide-react';
-import styles from '../../../../utils/styles'
+import { Plus, Trash2 } from 'lucide-react';
+import styles from '../../../../utils/styles';
 import PDFUpload from '../../PDFUpload';
 
-const EMPTY = () => ({ id: String(Date.now()+Math.random()), paperTitle:'', conferenceTitle:'', isbnNumberDate:'', indexing:'Scopus', authorshipPosition:'1st', publisher:'International' });
+// ── Sab blank ──
+const EMPTY = () => ({
+  id: String(Date.now()+Math.random()),
+  paperTitle:'', conferenceTitle:'', isbnNumberDate:'',
+  indexing:'', authorshipPosition:'', publisher:'',
+  proof: null,
+});
 
 export default function R3Form({ entries, setEntries }) {
   const add    = () => setEntries([...entries, EMPTY()]);
@@ -14,7 +20,7 @@ export default function R3Form({ entries, setEntries }) {
       {entries.map((entry, i) => (
         <div key={entry.id} style={styles.card}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-            <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Conference Paper #{i + 1}</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: 'var(--text-main,#0f172a)' }}>Conference Paper #{i + 1}</h3>
             <button onClick={() => remove(entry.id)} style={{ ...styles.menuBtn, color: '#ef4444' }}><Trash2 size={16} /></button>
           </div>
           <div style={styles.grid}>
@@ -30,23 +36,25 @@ export default function R3Form({ entries, setEntries }) {
             <div><label style={styles.label}>Indexing</label>
               <select style={styles.input} value={entry.indexing}
                 onChange={(e) => update(entry.id, 'indexing', e.target.value)}>
+                <option value="">-- Select --</option>
                 <option>Scopus</option><option>IEEE</option><option>Wiley</option><option>Springer</option>
               </select></div>
             <div><label style={styles.label}>Authorship Position</label>
               <select style={styles.input} value={entry.authorshipPosition}
                 onChange={(e) => update(entry.id, 'authorshipPosition', e.target.value)}>
+                <option value="">-- Select --</option>
                 <option value="1st">1st</option><option value="2nd">2nd</option>
               </select></div>
             <div><label style={styles.label}>Publisher</label>
               <select style={styles.input} value={entry.publisher}
                 onChange={(e) => update(entry.id, 'publisher', e.target.value)}>
+                <option value="">-- Select --</option>
                 <option>International</option><option>National</option>
               </select></div>
             <div>
-              {/* <label style={styles.label}>Proof (PDF)</label>
-              <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
-              <PDFUpload label="Proof (PDF)" value={entry.proof} onChange={(val) => update(entry.id, 'proof', val)} />
-              </div>
+              <PDFUpload label="Proof (PDF)" value={entry.proof}
+                onChange={(val) => update(entry.id, 'proof', val)} />
+            </div>
           </div>
         </div>
       ))}

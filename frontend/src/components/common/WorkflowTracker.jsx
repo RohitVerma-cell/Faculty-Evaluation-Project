@@ -1,6 +1,11 @@
 import { Check, Clock, X } from 'lucide-react';
 import { WORKFLOW_STEPS, STATUS_ORDER } from '../../utils/constants';
 
+/**
+ * WorkflowTracker
+ * Props:
+ *   status {string}  current submission status
+ */
 export default function WorkflowTracker({ status }) {
   const currentIndex = STATUS_ORDER.indexOf(status);
   const isRejected   = status === 'rejected';

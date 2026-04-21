@@ -1,5 +1,5 @@
 import { Plus, Trash2, Upload } from 'lucide-react';
-import styles from '../../utils/styles';
+import styles from '../../../utils/styles';
 
 const DEFAULT_ENTRY = {
   subject: '',
