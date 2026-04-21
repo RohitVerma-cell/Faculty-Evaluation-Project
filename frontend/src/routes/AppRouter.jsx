@@ -72,6 +72,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import FacultyRoutes from './FacultyRoutes';
 import HODRoutes from './HODRoutes';
+import PrincipalRoutes from './PrincipalRoutes';
 import LoginPage from '../pages/auth/Login';
 
 const ROLE_HOME = {
@@ -120,6 +121,17 @@ export default function AppRouter() {
             : role !== 'hod'
               ? <Navigate to={ROLE_HOME[role] || '/login'} replace />
               : <HODRoutes />
+        }
+      />
+
+<Route
+        path="/Principal/*"
+        element={
+          !user
+            ? <Navigate to="/login" replace />
+            : role !== 'principal'
+              ? <Navigate to={ROLE_HOME[role] || '/login'} replace />
+              : <PrincipalRoutes />
         }
       />
 

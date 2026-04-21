@@ -128,6 +128,8 @@ export default function LoginPage() {
             { role: 'Faculty', email: 'Rishamjot@university.edu', password: '1234' },
             { role: 'Faculty', email: 'ananya@university.edu',    password: '1234' },
             { role: 'HoD',     email: 'hod@university.edu',       password: '1234' },
+            { role: 'Principal',     email: 'principal@university.edu',       password: '1234' },
+            { role: 'Principal2',     email: 'principal2@university.edu',       password: '1234' },
           ].map((u) => (
             <button key={u.email} onClick={() => { setEmail(u.email); setPassword(u.password); }}
               style={{
