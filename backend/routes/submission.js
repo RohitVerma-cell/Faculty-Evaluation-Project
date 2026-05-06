@@ -5,6 +5,22 @@ const Submission = require('../models/Submission');
 
 const LOCKED_STATUSES = ['hod_approved', 'principal_approved', 'director_approved', 'chairman_approved'];
 
+
+
+
+// ── ✅ THIS MUST BE FIRST — before router.get('/:email')
+router.get('/all', async (req, res) => {
+  try {
+    const submissions = await Submission.find({}).sort({ updatedAt: -1 });
+    res.json(submissions);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
+
 // ── GET /:email ── Fetch submission by faculty email
 router.get('/:email', async (req, res) => {
   try {
