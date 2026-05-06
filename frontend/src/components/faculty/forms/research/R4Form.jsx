@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Plus, Trash2, Upload } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import styles from '../../../../utils/styles';
 import PDFUpload from '../../PDFUpload';
 
-const EMPTY_EXT  = () => ({ id: String(Date.now()+Math.random()), projectTitle:'', agency:'', amount:'', status:'Ongoing', role:'PI', sanctionNo:'' });
-const EMPTY_IND  = () => ({ id: String(Date.now()+Math.random()), projectTitle:'', industry:'', amount:'', sanctionNumber:'', role:'PI', coPIs:'' });
+// ── Sab blank ──
+const EMPTY_EXT = () => ({ id: String(Date.now()+Math.random()), projectTitle:'', agency:'', amount:'', status:'', role:'', sanctionNo:'', proof: null });
+const EMPTY_IND = () => ({ id: String(Date.now()+Math.random()), projectTitle:'', industry:'', amount:'', sanctionNumber:'', role:'', coPIs:'', proof: null });
 
 const SUBTABS = [
   { key: 'external', label: 'R.4.1-4 BFGI/External Agency' },
@@ -31,7 +32,7 @@ export default function R4Form({ data, setData }) {
           {(data.externalProjects||[]).map((entry, i) => (
             <div key={entry.id} style={styles.card}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Project #{i+1}</h3>
+                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: 'var(--text-main,#0f172a)' }}>Project #{i+1}</h3>
                 <button onClick={() => remove('externalProjects', entry.id)} style={{ ...styles.menuBtn, color: '#ef4444' }}><Trash2 size={16} /></button>
               </div>
               <div style={styles.grid}>
@@ -47,21 +48,22 @@ export default function R4Form({ data, setData }) {
                 <div><label style={styles.label}>Status</label>
                   <select style={styles.input} value={entry.status}
                     onChange={(e) => update('externalProjects', entry.id, 'status', e.target.value)}>
+                    <option value="">-- Select --</option>
                     <option>Ongoing</option><option>Completed</option>
                   </select></div>
                 <div><label style={styles.label}>Role</label>
                   <select style={styles.input} value={entry.role}
                     onChange={(e) => update('externalProjects', entry.id, 'role', e.target.value)}>
+                    <option value="">-- Select --</option>
                     <option>PI</option><option>Co-PI</option>
                   </select></div>
                 <div><label style={styles.label}>Sanction No.</label>
                   <input style={styles.input} placeholder="Sanction number" value={entry.sanctionNo}
                     onChange={(e) => update('externalProjects', entry.id, 'sanctionNo', e.target.value)} /></div>
                 <div>
-                  {/* <label style={styles.label}>Proof (PDF)</label>
-                  <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
-                  <PDFUpload label="Proof (PDF)" value={entry.proof} onChange={(val) => update('externalProjects', entry.id, 'proof', val)} />
-                  </div>
+                  <PDFUpload label="Proof (PDF)" value={entry.proof}
+                    onChange={(val) => update('externalProjects', entry.id, 'proof', val)} />
+                </div>
               </div>
             </div>
           ))}
@@ -74,7 +76,7 @@ export default function R4Form({ data, setData }) {
           {(data.industryProjects||[]).map((entry, i) => (
             <div key={entry.id} style={styles.card}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>Industry Project #{i+1}</h3>
+                <h3 style={{ fontSize: 14, fontWeight: 600, margin: 0, color: 'var(--text-main,#0f172a)' }}>Industry Project #{i+1}</h3>
                 <button onClick={() => remove('industryProjects', entry.id)} style={{ ...styles.menuBtn, color: '#ef4444' }}><Trash2 size={16} /></button>
               </div>
               <div style={styles.grid}>
@@ -93,16 +95,16 @@ export default function R4Form({ data, setData }) {
                 <div><label style={styles.label}>Role (PI/Co-PI)</label>
                   <select style={styles.input} value={entry.role}
                     onChange={(e) => update('industryProjects', entry.id, 'role', e.target.value)}>
+                    <option value="">-- Select --</option>
                     <option>PI</option><option>Co-PI</option>
                   </select></div>
                 <div><label style={styles.label}>Name of Co-PIs</label>
                   <input style={styles.input} placeholder="Co-PI names" value={entry.coPIs}
                     onChange={(e) => update('industryProjects', entry.id, 'coPIs', e.target.value)} /></div>
                 <div>
-                  {/* <label style={styles.label}>Proof (PDF)</label>
-                  <label style={styles.uploadLabel}><Upload size={16} /> Upload<input type="file" accept=".pdf" style={{ display: 'none' }} /></label> */}
-                  <PDFUpload label="Proof (PDF)" value={entry.proof} onChange={(val) => update('industryProjects', entry.id, 'proof', val)} />
-                  </div>
+                  <PDFUpload label="Proof (PDF)" value={entry.proof}
+                    onChange={(val) => update('industryProjects', entry.id, 'proof', val)} />
+                </div>
               </div>
             </div>
           ))}

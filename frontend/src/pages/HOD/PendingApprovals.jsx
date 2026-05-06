@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Search, Eye } from 'lucide-react'
-import { useStore } from '../../context/HOD/useStore'
+import { useStore } from '../../context/useStore'
 import Card from '../../components/HOD/Card'
 import Button from '../../components/HOD/Button'
 import StatusBadge from '../../components/HOD/StatusBadge'
@@ -45,7 +45,7 @@ export default function PendingApprovals() {
     <div className="page-enter space-y-4">
       {/* Filters */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="relative shrink-0">
+        <div className="relative flex-shrink-0">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
           <input
             className={`${inputCls} pl-8 min-w-[210px]`}

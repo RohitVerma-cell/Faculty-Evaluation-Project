@@ -10,7 +10,7 @@ export default function KpiCard({ label, value, icon: Icon, color = 'blue', chan
   return (
     <div className="relative bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-5 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
       {/* top accent bar */}
-      <div className={`absolute top-0 left-0 right-0 h-[3px] bg-linear-to-r ${bar}`} />
+      <div className={`absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r ${bar}`} />
 
       <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${icon}`}>
         <Icon size={18} />

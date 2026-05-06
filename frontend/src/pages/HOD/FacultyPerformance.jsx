@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { ArrowUpDown, ArrowUp, ArrowDown, Trophy } from 'lucide-react'
-import { useStore } from '../../context/HOD/useStore'
+import { useStore } from '../../context/useStore'
 import Card from '../../components/HOD/Card'
 import Avatar from '../../components/HOD/Avatar'
 import StatusBadge from '../../components/HOD/StatusBadge'

@@ -1,18 +1,8 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Sidebar       from './components/faculty/sidebar';
-import DashboardPage from './pages/faculty/dashboardPage';
-import DataEntryPage from './pages/faculty/DataEntryPge';
-import Toast         from './components/common/Toast';
-import HODAppRoutes from './routes/HOD/AppRoutes';
-import './index.css'
-=======
 // import Sidebar       from './components/faculty/sidebar';
 // import DashboardPage from './pages/faculty/dashboardPage';
 // import DataEntryPage from './pages/faculty/DataEntryPge';
 // import Toast         from './components/common/Toast';
-// import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // const FACULTY_EMAIL = 'Rishamjot@university.edu';
@@ -161,13 +151,9 @@ import './index.css'
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
-import FacultyRoutes    from './routes/FacultyRoutes';
-// import HodRoutes     from './routes/HodRoutes';      ← next ye karna haiii
+import { AuthProvider }  from './context/AuthContext';
+import AppRouter         from './routes/AppRouter';
 
-// Abhi hardcoded — baad mein ye login se aayega
-const CURRENT_ROLE = 'faculty';
-
->>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
 export default function App() {
   const [toastMsg,     setToastMsg]     = useState('');
   const [activeModule, setActiveModule] = useState('teaching');
@@ -215,69 +201,12 @@ export default function App() {
   };
 
   return (
-<<<<<<< HEAD
-    <BrowserRouter>
-      <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', fontFamily: "'Inter', sans-serif" }}>
-
-        <Sidebar
-          activeModule={activeModule}
-          activeItem={activeItem}
-          onModuleItemSelect={handleModuleItemSelect}
-        />
-
-        <div style={{ flex: 1, height: '100vh', overflowY: 'auto', overflowX: 'hidden', background: '#f8fafc' }}>
-          <div style={{ padding: 28, maxWidth: '100%', boxSizing: 'border-box' }}>
-            <Routes>
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
-
-              <Route path="/dashboard" element={
-                <DashboardPage {...marksProps} />
-              } />
-
-              <Route path="/entry" element={
-                <DataEntryPage
-                  setToastMsg={setToastMsg}
-                  activeModule={activeModule}
-                  activeItem={activeItem}
-                  setActiveModule={setActiveModule}
-                  setActiveItem={setActiveItem}
-                  {...marksProps}
-                  {...setterProps}
-                />
-              } />
-              <Route path="/HOD/*" element={
-                <HODAppRoutes/>
-              } />
-              
-              {/* <HODAppRoutes /> */}
-            </Routes>
-          </div>
-        </div>
-
-        {toastMsg && <Toast message={toastMsg} onClose={() => setToastMsg('')} />}
-      </div>
-    </BrowserRouter>
-    
-=======
     <ThemeProvider>
-      <BrowserRouter>
-        <Routes>
-
-          {/* ── Faculty Routes ── */}
-          <Route path="/faculty/*" element={<FacultyRoutes />} />
-
-          
-          {/* <Route path="/hod/*" element={<HodRoutes />} /> */}
-
-
-          {/* ── Default redirect based on role ── */}
-          <Route path="*" element={
-            <Navigate to={`/${CURRENT_ROLE}/dashboard`} replace />
-          } />
-
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
->>>>>>> 028cc01874988f9546e34c00a35016ffbdb6fac9
   );
 }

@@ -1,4 +1,4 @@
-import { getInitials } from '../../utils/HOD/helpers'
+import { getInitials } from '../../utils/HODhelpers'
 
 const GRADIENTS = [
   'from-blue-500 to-violet-600',
@@ -14,7 +14,7 @@ export default function Avatar({ name = '', initials, size = 36, index = 0 }) {
 
   return (
     <div
-      className={`rounded-full bg-linear-to-br ${grad} flex items-center justify-center text-white font-bold shrink-0 select-none`}
+      className={`rounded-full bg-gradient-to-br ${grad} flex items-center justify-center text-white font-bold flex-shrink-0 select-none`}
       style={{ width: size, height: size, fontSize }}
     >
       {text}

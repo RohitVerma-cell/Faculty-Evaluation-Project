@@ -4,10 +4,10 @@ import {
   Legend, ResponsiveContainer
 } from 'recharts'
 import { TrendingUp, CheckCircle, Award, FileText } from 'lucide-react'
-import { useStore } from '../../context/HOD/useStore'
-import { MOCK_TREND, MOCK_MODULE_DATA, MOCK_SCHOOL_DATA } from '../../data/data'
+import { useStore } from '../../context/useStore'
+import { MOCK_TREND, MOCK_MODULE_DATA, MOCK_SCHOOL_DATA } from '../../data/HODmockdata'
 import KpiCard from '../../components/HOD/KpiCard'
-import Card, { CardHeader } from '../../components/HOD//Card'
+import Card, { CardHeader } from '../../components/HOD/Card'
 import Avatar from '../../components/HOD/Avatar'
 
 const TT = { background: '#fff', border: '1px solid #e2e8f0', borderRadius: 8, fontSize: 12 }
@@ -102,7 +102,7 @@ export default function Analytics() {
                     )}
                   </div>
                 </div>
-                <span className="text-[11px] text-slate-400 whitespace-nowrap shrink-0">
+                <span className="text-[11px] text-slate-400 whitespace-nowrap flex-shrink-0">
                   {f.approved}/{f.submissions}
                 </span>
               </div>

@@ -5,7 +5,7 @@ export default function ConfirmModal({ open, title, body, confirmLabel, variant 
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-200 flex items-center justify-center p-6 animate-fade-in"
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[200] flex items-center justify-center p-6 animate-fade-in"
       onClick={onCancel}
     >
       <div

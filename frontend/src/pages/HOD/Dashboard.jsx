@@ -5,8 +5,8 @@ import {
   Legend, ResponsiveContainer
 } from 'recharts'
 import { Users, Clock, CheckCircle, XCircle } from 'lucide-react'
-import { useStore } from '../../context/HOD/useStore'
-import { MOCK_TREND, MOCK_MODULE_DATA, MOCK_ACTIVITIES } from '../../data/data'
+import { useStore } from '../../context/useStore'
+import { MOCK_TREND, MOCK_MODULE_DATA, MOCK_ACTIVITIES } from '../../data/HODmockdata'
 import KpiCard from '../../components/HOD/KpiCard'
 import Card, { CardHeader } from '../../components/HOD/Card'
 import Button from '../../components/HOD/Button'
@@ -85,7 +85,7 @@ export default function Dashboard() {
           <div className="space-y-0">
             {MOCK_ACTIVITIES.map(a => (
               <div key={a.id} className="flex items-start gap-3 py-2.5 border-b border-slate-100 dark:border-slate-800 last:border-0">
-                <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" style={{ background: a.color }} />
+                <div className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0" style={{ background: a.color }} />
                 <div>
                   <p className="text-[13px] text-slate-700 dark:text-slate-300 leading-snug">{a.text}</p>
                   <p className="text-[11px] text-slate-400 mt-0.5">{a.time}</p>

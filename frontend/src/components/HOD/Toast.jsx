@@ -1,5 +1,5 @@
 import { CheckCircle, XCircle, Info } from 'lucide-react'
-import { useStore } from '../../context/HOD/useStore'
+import { useStore } from '../../context/useStore'
 
 const CFG = {
   success: { Icon: CheckCircle, cls: 'border-l-emerald-500 text-emerald-600' },

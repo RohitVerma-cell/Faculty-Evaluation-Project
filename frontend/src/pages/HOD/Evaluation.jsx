@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeft, PenLine } from 'lucide-react'
-import { useStore } from '../../context/HOD/useStore'
-import { MOCK_COURSES } from '../../data/data'
-import { calcTL2Total, calcTL4Base } from '../../utils/HOD/helpers'
+import { useStore } from '../../context/useStore'
+import { MOCK_COURSES } from '../../data/HODmockdata'
+import { calcTL2Total, calcTL4Base } from '../../utils/HODhelpers'
 import Card from '../../components/HOD/Card'
 import Button from '../../components/HOD/Button'
 import Avatar from '../../components/HOD/Avatar'
@@ -49,7 +49,7 @@ function StepBar({ current }) {
               : 'text-slate-400',
           ].join(' ')}>
             <span className={[
-              'w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0',
+              'w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0',
               active ? 'bg-white text-blue-600'
                 : done ? 'bg-emerald-500 text-white'
                 : 'bg-slate-300 dark:bg-slate-600 text-slate-500',
