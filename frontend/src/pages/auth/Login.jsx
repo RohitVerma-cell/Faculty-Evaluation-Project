@@ -125,9 +125,13 @@ export default function LoginPage() {
             Demo Credentials
           </p>
           {[
-            { role: 'Faculty', email: 'Rishamjot@university.edu', password: '1234' },
+            { role: 'Faculty', email: 'rishamjot@university.edu', password: '1234' },
             { role: 'Faculty', email: 'ananya@university.edu',    password: '1234' },
             { role: 'HoD',     email: 'hod@university.edu',       password: '1234' },
+<<<<<<< Updated upstream
+=======
+            { role: 'principal',     email: 'principal@university.edu',       password: '1234' },
+>>>>>>> Stashed changes
           ].map((u) => (
             <button key={u.email} onClick={() => { setEmail(u.email); setPassword(u.password); }}
               style={{

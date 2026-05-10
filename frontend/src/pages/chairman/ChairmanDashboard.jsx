@@ -9,7 +9,7 @@ const BASE_URL = 'http://localhost:5000/api/chairman';
 
 const DEPT_COLORS = {
   CSE: '#6366f1', ECE: '#0ea5e9', ME: '#10b981',
-  CE:  '#f59e0b', EE:  '#ef4444', IT: '#8b5cf6',
+  CE: '#f59e0b', EE: '#ef4444', IT: '#8b5cf6',
 };
 const getDeptColor = (d) => DEPT_COLORS[d] || '#64748b';
 
@@ -36,11 +36,11 @@ function BarChart({ data }) {
 }
 
 export default function ChairmanDashboard() {
-  const { user }   = useAuth();
-  const navigate   = useNavigate();
-  const [data,     setData]    = useState([]);
-  const [stats,    setStats]   = useState({ total: 0, avgMarks: 0, departments: [] });
-  const [loading,  setLoading] = useState(true);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
+  const [stats, setStats] = useState({ total: 0, avgMarks: 0, departments: [] });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -50,8 +50,8 @@ export default function ChairmanDashboard() {
           fetch(`${BASE_URL}/stats`),
         ]);
         const submissions = await subRes.json();
-        const statsData   = await statRes.json();
-        if (subRes.ok)  setData(submissions);
+        const statsData = await statRes.json();
+        if (subRes.ok) setData(submissions);
         if (statRes.ok) setStats(statsData);
       } catch (err) { console.error(err); }
       finally { setLoading(false); }
@@ -77,10 +77,10 @@ export default function ChairmanDashboard() {
   });
 
   const summaryCards = [
-    { label: 'Total Approved',  value: stats.total,              icon: Users,      color: '#6366f1', bg: '#eef2ff' },
-    { label: 'Institute Avg',   value: `${stats.avgMarks}/300`,  icon: TrendingUp, color: '#0ea5e9', bg: '#e0f2fe' },
-    { label: 'Departments',     value: stats.departments.length, icon: BarChart2,  color: '#10b981', bg: '#d1fae5' },
-    { label: 'Top Score',       value: top5[0]?.calculatedMarks?.grandTotal?.toFixed(1) || '—', icon: Award, color: '#f59e0b', bg: '#fef3c7' },
+    { label: 'Total Approved', value: stats.total, icon: Users, color: '#6366f1', bg: '#eef2ff' },
+    { label: 'Institute Avg', value: `${stats.avgMarks}/300`, icon: TrendingUp, color: '#0ea5e9', bg: '#e0f2fe' },
+    { label: 'Departments', value: stats.departments.length, icon: BarChart2, color: '#10b981', bg: '#d1fae5' },
+    { label: 'Top Score', value: top5[0]?.calculatedMarks?.grandTotal?.toFixed(1) || '—', icon: Award, color: '#f59e0b', bg: '#fef3c7' },
   ];
 
   if (loading) return (
@@ -167,8 +167,8 @@ export default function ChairmanDashboard() {
           ) : (
             top5.map((s, i) => {
               const marks = s.calculatedMarks?.grandTotal || 0;
-              const medals = ['🥇','🥈','🥉','4️⃣','5️⃣'];
-              const dept   = s.department || 'CSE';
+              const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+              const dept = s.department || 'CSE';
               return (
                 <div key={s._id} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
                   <span style={{ fontSize: 16, flexShrink: 0 }}>{medals[i]}</span>
@@ -181,7 +181,7 @@ export default function ChairmanDashboard() {
                       <span style={{ fontSize: 13, fontWeight: 800, color: '#6366f1', flexShrink: 0 }}>{marks.toFixed(1)}</span>
                     </div>
                     <div style={{ height: 4, background: 'var(--bg-hover,#f1f5f9)', borderRadius: 2, overflow: 'hidden' }}>
-                      <div style={{ height: '100%', width: `${(marks/300)*100}%`, background: i===0 ? '#f59e0b' : i===1 ? '#94a3b8' : i===2 ? '#b45309' : '#6366f1', borderRadius: 2 }} />
+                      <div style={{ height: '100%', width: `${(marks / 300) * 100}%`, background: i === 0 ? '#f59e0b' : i === 1 ? '#94a3b8' : i === 2 ? '#b45309' : '#6366f1', borderRadius: 2 }} />
                     </div>
                   </div>
                 </div>
@@ -208,7 +208,7 @@ export default function ChairmanDashboard() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: 14 }}>
             {[...stats.departments].sort((a, b) => b.avg - a.avg).map((d) => {
               const color = getDeptColor(d.dept);
-              const pct   = Math.round((d.avg / 300) * 100);
+              const pct = Math.round((d.avg / 300) * 100);
               return (
                 <div key={d.dept} style={{ padding: '14px 16px', background: 'var(--bg-hover,#f8fafc)', borderRadius: 10, border: '1px solid var(--border,#e2e8f0)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>

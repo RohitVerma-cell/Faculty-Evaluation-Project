@@ -1,3 +1,6 @@
+// ── components/PDFModal.jsx ──
+// Reusable PDF viewer modal — same window mein PDF dikhata hai
+
 import { X, ExternalLink } from 'lucide-react';
 import { useEffect } from 'react';
 

@@ -4,29 +4,25 @@ import axios from "axios"
 const Admin = () => {
   const [adminData, setAdminData] = useState([])
 
-  const getData = async ()=>{
-    const loginData = {
-      email:"ratan@gmail.com",
-      password:"ratan1234"
-    }
-    try {
-      const {data} = await axios.post(import.meta.env.VITE_API_URL+"/admin/login",loginData);
-      if(!data.success){
-        return alert(data.message)
-      }
-
-      console.log(data)
-      setAdminData(data.data)
-
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
   useEffect(() => {
+    const getData = async () => {
+      const loginData = {
+        email: "ratan@gmail.com",
+        password: "ratan1234"
+      }
+      try {
+        const { data } = await axios.post(import.meta.env.VITE_API_URL + "/admin/login", loginData);
+        if (!data.success) {
+          return alert(data.message)
+        }
+        setAdminData(data.data)
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
     getData();
   }, [])
-  
+
   return (
     <>
       <div>

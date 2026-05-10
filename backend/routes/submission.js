@@ -103,4 +103,19 @@ router.patch('/:email/status', async (req, res) => {
   }
 });
 
+// ── GET /principal/pending ── Fetch all submissions approved by HOD
+router.get('/principal/pending', async (req, res) => {
+  try {
+    const submissions = await Submission.find({ status: 'hod_approved' }).sort({ updatedAt: -1 });
+
+    res.json({
+      success: true,
+      count: submissions.length,
+      submissions,
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;

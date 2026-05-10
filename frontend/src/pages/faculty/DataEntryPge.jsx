@@ -10,7 +10,8 @@ import R3Form  from '../../components/faculty/forms/research/R3Form';
 import R4Form  from '../../components/faculty/forms/research/R4Form';
 import R5Form  from '../../components/faculty/forms/research/R5Form';
 import R6Form  from '../../components/faculty/forms/research/R6Form';
-import { SD1Form, SD2Form, SD3Form, SD4Form, SD5Form, SD6Form } from '../../components/faculty/forms/self-development/SDForm';
+// import { SD1Form, SD2Form, SD3Form, SD4Form, SD5Form, SD6Form } from '../../components/faculty/forms/selfdevelopment/SDForms';
+ import { SD1Form, SD2Form, SD3Form, SD4Form, SD5Form, SD6Form } from '../../components/faculty/forms/self-development/SDForm'
 import { calcTLTotal, calcResearchTotal, calcSDTotal, calcGrandTotal } from '../../utils/marksCalculator';
 
 const BASE_URL      = 'http://localhost:5000/api/submission';
@@ -33,8 +34,9 @@ const ITEM_LABELS = {
 
 export default function DataEntryPage({
   setToastMsg, activeModule, activeItem,
+  // ── Dynamic from AuthContext via FacultyRoutes ──
   facultyEmail, facultyName,
-  onStatusChange, // ← NEW — status update karo dashboard par
+  // State
   tl1Data, setTl1Data, tl4Data, setTl4Data,
   r1Entries, setR1Entries, r2Data, setR2Data,
   r3Entries, setR3Entries, r4Data, setR4Data,
@@ -53,14 +55,16 @@ export default function DataEntryPage({
     return r;
   };
 
-  // Marks
+  // Marks calculate
   const tl       = calcTLTotal(tl1Data || {}, tl4Data || {});
   const research = calcResearchTotal(r1Entries||[], r2Data||{}, r3Entries||[], r4Data||{}, r5Data||{}, r6Data||{});
   const sd       = calcSDTotal(sd1Entries||[], sd2Entries||[], sd3Entries||[], sd4Entries||[], sd5Data||{}, sd6Entries||[]);
   const grand    = calcGrandTotal(tl.total, research.total, sd.total);
 
   const getPayload = () => ({
-    facultyName, facultyEmail, academicYear: ACADEMIC_YEAR,
+    facultyName:  facultyName,   // ← dynamic
+    facultyEmail: facultyEmail,  // ← dynamic
+    academicYear: ACADEMIC_YEAR,
     tl1: cleanObj(tl1Data), tl4: cleanObj(tl4Data),
     r1JournalPapers: clean(r1Entries), r2Books: cleanObj(r2Data),
     r3ConferencePapers: clean(r3Entries), r4Projects: cleanObj(r4Data),
@@ -89,11 +93,8 @@ export default function DataEntryPage({
 
   const handleSaveDraft = async () => {
     setLoading(true);
-    try {
-      await saveToBackend();
-      setToastMsg('✅ Draft saved successfully!');
-      onStatusChange?.('draft'); // ← status update
-    } catch (err) { setToastMsg(`❌ ${err.message}`); }
+    try { await saveToBackend(); setToastMsg('✅ Draft saved successfully!'); }
+    catch (err) { setToastMsg(`❌ ${err.message}`); }
     finally { setLoading(false); }
   };
 
@@ -107,7 +108,6 @@ export default function DataEntryPage({
       });
       if (!res.ok) { const e = await res.json(); throw new Error(e.message); }
       setToastMsg('✅ Submitted for HoD review!');
-      onStatusChange?.('submitted'); // ← status update — tracker move karega
     } catch (err) { setToastMsg(`❌ ${err.message}`); }
     finally { setLoading(false); }
   };
@@ -143,7 +143,6 @@ export default function DataEntryPage({
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {/* Section score */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '6px 16px', borderRadius: 10, background: meta.bg, border: `1.5px solid ${meta.color}40`, minWidth: 70 }}>
             <span style={{ fontSize: 20, fontWeight: 800, color: meta.color, lineHeight: 1.1 }}>{currScore.marks.toFixed(1)}</span>
             <span style={{ fontSize: 10, color: meta.color, opacity: 0.75, fontWeight: 500 }}>/ {currScore.max} marks</span>
@@ -153,7 +152,7 @@ export default function DataEntryPage({
             <Save size={15} /> {loading ? 'Saving…' : 'Save Draft'}
           </button>
           <button onClick={handleSubmit} disabled={loading}
-            style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 18px', borderRadius: 9, border: 'none', background: loading ? '#94a3b8' : 'linear-gradient(135deg,#6366f1,#8b5cf6)', fontSize: 13, fontWeight: 600, color: '#fff', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: loading ? 'none' : '0 2px 8px rgba(99,102,241,0.35)' }}>
+            style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '9px 18px', borderRadius: 9, border: 'none', background: loading ? '#94a3b8' : 'linear-gradient(135deg, #6366f1, #8b5cf6)', fontSize: 13, fontWeight: 600, color: '#fff', cursor: loading ? 'not-allowed' : 'pointer', boxShadow: loading ? 'none' : '0 2px 8px rgba(99,102,241,0.35)' }}>
             <Send size={15} /> {loading ? 'Submitting…' : 'Submit'}
           </button>
         </div>
@@ -176,6 +175,7 @@ export default function DataEntryPage({
         {activeModule==='selfdevelopment' && activeItem==='sd5' && <SD5Form data={sd5Data||{}}  setData={setSd5Data} />}
         {activeModule==='selfdevelopment' && activeItem==='sd6' && <SD6Form entries={sd6Entries} setEntries={setSd6Entries} />}
       </div>
+
     </div>
   );
 }
