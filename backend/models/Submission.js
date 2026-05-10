@@ -278,6 +278,32 @@ const CalculatedMarksSchema = new mongoose.Schema({
   finalTotal: { type: Number, default: 0 },
 }, { _id: false });
 
+
+
+// ─────────────────────────────────────────────
+// HOD EVALUATION (new)
+// ─────────────────────────────────────────────
+
+const TL2BreakdownSchema = new mongoose.Schema({
+  teaching:      { type: Number, default: 0 },
+  subject:       { type: Number, default: 0 },
+  communication: { type: Number, default: 0 },
+  engagement:    { type: Number, default: 0 },
+}, { _id: false });
+
+const HodEvaluationSchema = new mongoose.Schema({
+  tl2Total:      { type: Number, default: 0 },
+  tl2Breakdown:  { type: TL2BreakdownSchema, default: () => ({}) },
+  tl3Score:      { type: Number, default: 0 },   // raw 0-10 slider value
+  tl3Remarks:    { type: String, default: '' },
+  tl4Score:      { type: Number, default: 0 },   // 0-100 final
+  totalScore:    { type: Number, default: 0 },   // avg of TL1+TL2+TL3+TL4
+  evaluatedAt:   { type: String, default: '' },
+}, { _id: false });
+
+
+
+
 // ─────────────────────────────────────────────
 // MAIN SUBMISSION SCHEMA
 // ─────────────────────────────────────────────
@@ -287,6 +313,12 @@ const SubmissionSchema = new mongoose.Schema({
   facultyEmail: { type: String, required: true },
   academicYear: { type: String, required: true },
   status:       { type: String, default: 'draft' },
+
+  // ── NEW ──────────────────────────────────────
+  department:    { type: String, default: 'CS' },   // e.g. 'CS', 'ECE', 'ME'
+  tl1Score:      { type: Number, default: 0   },   // auto-calculated, written by your TL1 scoring logic
+  hodEvaluation: { type: HodEvaluationSchema, default: () => ({}) },
+  // ─────────────────────────────────────────────
 
   // Teaching Learning
   tl1: { type: TL1Schema, default: () => ({}) },
